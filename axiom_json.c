@@ -1,5 +1,5 @@
 double fast_atof(const char* s) {
-    // 1. Safety Gate: Handle empty or null strings
+    // 1. Safety Gate: Handle empty strings
     if (!s || *s == '\0') return 0.0;
 
     double val = 0.0;
@@ -14,7 +14,7 @@ double fast_atof(const char* s) {
         has_digit = 1;
     }
     
-    // 3. Error Trap: If first part isn't a number and isn't a decimal, skip
+    // 3. Error Trap: If no digits found and not a decimal point
     if (!has_digit && *s != '.') return -1.0; 
 
     val = (double)int_part;
