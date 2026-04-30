@@ -1,3 +1,4 @@
 data.txt
 *.so
 monster_logs.json
+venv/
