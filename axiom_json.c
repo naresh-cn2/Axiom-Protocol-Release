@@ -1,34 +1,23 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/mman.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <string.h>
-#include <unistd.h>
+double fast_atof(const char* s) {
+    double val = 0.0;
+    long long int_part = 0;
+    double weight = 1.0;
 
-// This is the function Python will call
-long count_criticals(const char* filename) {
-    int fd = open(filename, O_RDONLY);
-    if (fd < 0) return -1;
-
-    struct stat st;
-    fstat(fd, &st);
-
-    // Memory Map the file
-    char* data = mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
-    if (data == MAP_FAILED) { close(fd); return -1; }
-
-    long count = 0;
-    char* ptr = data;
-    char* end = data + st.st_size;
-
-    // Fast scan
-    while ((ptr = memmem(ptr, end - ptr, "\"CRITICAL\"", 10)) != NULL) {
-        count++;
-        ptr += 10;
+    while (*s >= '0' && *s <= '9') {
+        int_part = int_part * 10 + (*s - '0');
+        s++;
     }
+    val = (double)int_part;
 
-    munmap(data, st.st_size);
-    close(fd);
-    return count; // Return the result to Python
+    if (*s == '.') {
+        s++;
+        long long frac_part = 0;
+        while (*s >= '0' && *s <= '9') {
+            frac_part = frac_part * 10 + (*s - '0');
+            weight *= 10.0;
+            s++;
+        }
+        val += (double)frac_part / weight; 
+    }
+    return val;
 }

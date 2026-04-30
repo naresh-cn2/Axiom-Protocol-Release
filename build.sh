@@ -1,6 +1,1 @@
-# Compile the C engine
-gcc -O3 axiom_json.c -o axiom_json
-
-# Run it and time it
-echo "--- Axiom-JSON Performance Result ---"
-time ./axiom_json
+gcc -shared -fPIC -O3 -o libaxiom.so axiom_json.c
