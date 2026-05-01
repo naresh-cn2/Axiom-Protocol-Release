@@ -24,8 +24,27 @@ The following chart demonstrates the delta between standard Python tools and the
 * **Axiom v1.1 (Precision):** 2.7 seconds
 * **Axiom v1.0 (Naive):** 0.31 seconds
 
----
+------
 
+## ⚔️ Competitive Analysis: The TOP1 Advantage
+
+While modern Rust-based and C++-based tools (Polars, DuckDB) offer significant speedups over Pandas, they inherit a critical legacy flaw: **Floating-Point Inaccuracy.**
+
+### **Why Axiom is Unbeatable:**
+1. **Deterministic Accuracy:** Unlike standard parsers that suffer from IEEE 754 drift, Axiom uses **Integer Accumulation** for financial-grade precision. 
+2. **Infrastructure Efficiency:** Most "fast" parsers require high-core counts to achieve speed. Axiom delivers **2.8x speedup on a single thread**, drastically reducing cloud compute costs.
+3. **Zero-Copy Architecture:** Leveraging `mmap`, Axiom achieves the lowest possible memory footprint by bypassing the CPython abstraction tax entirely.
+
+---
+### **🛠️ Engineering Trade-offs & Specialization**
+
+Axiom v1.1 is a **Surgical Ingestion Layer**, not a general-purpose data science library. We prioritize **Metal-Layer Efficiency** over **Feature Bloat**.
+
+- **The Focus:** High-speed, deterministic parsing. If you need complex SQL-style joins, use Polars. If you need to ingest 100M rows with zero drift and minimal cloud cost, use Axiom.
+- **Single-Core Optimization:** While others rely on multi-threading (increasing compute bills), Axiom is optimized for single-core dominance, allowing for leaner server instances.
+- **Memory Safety:** Axiom utilizes raw C for hardware-level control. This requires strict schema adherence, which we enforce via our C-level validator.
+
+---
 ### 🧠 Engineering Philosophy: Precision at Scale
 
 Standard float parsers often suffer from **Floating-Point Drift** due to repeated multiplication during ASCII conversion. Axiom v1.1 solves this through **Integer Accumulation**.
