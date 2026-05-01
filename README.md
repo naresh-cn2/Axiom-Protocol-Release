@@ -25,15 +25,14 @@ The following chart demonstrates the delta between standard Python tools and the
 * **Axiom v1.0 (Naive):** 0.31 seconds
 
 ------
+## ⚔️ Competitive Analysis: The Deterministic Advantage
 
-## ⚔️ Competitive Analysis: The TOP1 Advantage
+While modern Rust-based and C++-based tools (Polars, DuckDB) offer significant throughput improvements over Pandas, they often inherit a critical legacy trade-off: **Floating-Point Inconsistency.**
 
-While modern Rust-based and C++-based tools (Polars, DuckDB) offer significant speedups over Pandas, they inherit a critical legacy flaw: **Floating-Point Inaccuracy.**
-
-### **Why Axiom is Unbeatable:**
-1. **Deterministic Accuracy:** Unlike standard parsers that suffer from IEEE 754 drift, Axiom uses **Integer Accumulation** for financial-grade precision. 
-2. **Infrastructure Efficiency:** Most "fast" parsers require high-core counts to achieve speed. Axiom delivers **2.8x speedup on a single thread**, drastically reducing cloud compute costs.
-3. **Zero-Copy Architecture:** Leveraging `mmap`, Axiom achieves the lowest possible memory footprint by bypassing the CPython abstraction tax entirely.
+### **Architectural Differentiation:**
+1. **Deterministic Accuracy:** Unlike standard parsers that suffer from IEEE 754 drift during string-to-float conversion, Axiom utilizes **Integer Accumulation** to ensure financial-grade precision. 
+2. **Infrastructure Efficiency:** Most "high-performance" parsers rely on aggressive multi-threading to hide abstraction overhead. Axiom delivers a **2.8x speedup on a single thread**, enabling significant downsizing of cloud compute instances.
+3. **Zero-Copy Memory Strategy:** By leveraging `mmap` at the C-layer, Axiom bypasses the CPython abstraction tax entirely, maintaining the lowest possible memory footprint per ingestion cycle.
 
 ---
 ### **🛠️ Engineering Trade-offs & Specialization**
